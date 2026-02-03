@@ -4,65 +4,11 @@ export interface TowerParams {
   height: number;
   baseRadius: number;
   topRadius: number;
-  waistRadius: number;
-  waistPosition: number;
   strutCount: number;
   ringCount: number;
   strutRadius: number;
   showRings: boolean;
-  autoWaist: boolean;
   twistAngle: number; // Total twist in degrees from bottom to top
-}
-
-export interface WaistGeometry {
-  waistRadius: number;
-  waistPosition: number;
-}
-
-/**
- * Calculate the waist geometry for a true hyperboloid with straight-line struts.
- * 
- * For a strut connecting:
- *   - Bottom point: (a·cos(θ), a·sin(θ), 0)
- *   - Top point: (b·cos(θ+φ), b·sin(θ+φ), h)
- * 
- * The radius along the strut at parameter t (0 to 1) is:
- *   r²(t) = (1-t)²·a² + t²·b² + 2(1-t)·t·a·b·cos(φ)
- * 
- * The minimum radius occurs at:
- *   t_waist = (a² + a·b·cos(φ)) / (a² + b² + 2·a·b·cos(φ))
- */
-export function calculateWaistGeometry(
-  baseRadius: number,
-  topRadius: number,
-  twistAngleRadians: number
-): WaistGeometry {
-  const a = baseRadius;
-  const b = topRadius;
-  const cosφ = Math.cos(twistAngleRadians);
-
-  // Position of minimum radius (as fraction 0-1 of height)
-  const denominator = a * a + b * b + 2 * a * b * cosφ;
-  
-  // Handle edge case where denominator is near zero
-  if (Math.abs(denominator) < 0.0001) {
-    return { waistPosition: 0.5, waistRadius: (a + b) / 2 };
-  }
-
-  const tWaist = (a * a + a * b * cosφ) / denominator;
-
-  // Clamp to valid range
-  const t = Math.max(0, Math.min(1, tWaist));
-
-  // Calculate radius at waist position
-  const rSquared =
-    (1 - t) * (1 - t) * a * a +
-    t * t * b * b +
-    2 * (1 - t) * t * a * b * cosφ;
-  
-  const waistRadius = Math.sqrt(Math.max(0, rSquared));
-
-  return { waistPosition: t, waistRadius };
 }
 
 /**

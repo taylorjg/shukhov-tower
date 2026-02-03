@@ -9,13 +9,10 @@ const params: TowerParams = {
   height: 150,
   baseRadius: 40,
   topRadius: 20,
-  waistRadius: 15,
-  waistPosition: 0.4,
   strutCount: 24,
-  ringCount: 8,
+  ringCount: 4,
   strutRadius: 0.5,
   showRings: true,
-  autoWaist: true,
   twistAngle: 45, // degrees
 };
 
