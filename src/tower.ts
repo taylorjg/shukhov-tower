@@ -4,11 +4,12 @@ export interface TowerParams {
   height: number;
   baseRadius: number;
   topRadius: number;
+  sectionCount: number;
   strutCount: number;
-  ringCount: number;
+  ringCount: number; // Rings per section
   strutRadius: number;
   showRings: boolean;
-  twistAngle: number; // Total twist in degrees from bottom to top
+  twistAngle: number; // Twist angle per section in degrees
 }
 
 /**
@@ -95,6 +96,7 @@ export function createTower(params: TowerParams): THREE.Group {
     height,
     baseRadius,
     topRadius,
+    sectionCount,
     strutCount,
     ringCount,
     strutRadius,
@@ -103,6 +105,7 @@ export function createTower(params: TowerParams): THREE.Group {
   } = params;
 
   const twistRadians = (twistAngle * Math.PI) / 180;
+  const sectionHeight = height / sectionCount;
 
   // Materials
   const strutMaterial = new THREE.MeshStandardMaterial({
@@ -117,63 +120,79 @@ export function createTower(params: TowerParams): THREE.Group {
     roughness: 0.4,
   });
 
-  // Generate straight-line diagonal struts
-  // Two sets of struts going in opposite helical directions
-  for (let strutIndex = 0; strutIndex < strutCount; strutIndex++) {
-    const baseAngle = (strutIndex / strutCount) * Math.PI * 2;
-
-    // Clockwise strut (bottom to top as single straight line)
-    const cwStartAngle = baseAngle;
-    const cwEndAngle = baseAngle + twistRadians;
+  // Generate each section
+  for (let section = 0; section < sectionCount; section++) {
+    const sectionBottomY = section * sectionHeight;
+    const sectionTopY = (section + 1) * sectionHeight;
     
-    const cwStart = new THREE.Vector3(
-      Math.cos(cwStartAngle) * baseRadius,
-      0,
-      Math.sin(cwStartAngle) * baseRadius
-    );
+    // Interpolate radii for this section
+    const sectionBottomRadius = baseRadius + (topRadius - baseRadius) * (section / sectionCount);
+    const sectionTopRadius = baseRadius + (topRadius - baseRadius) * ((section + 1) / sectionCount);
 
-    const cwEnd = new THREE.Vector3(
-      Math.cos(cwEndAngle) * topRadius,
-      height,
-      Math.sin(cwEndAngle) * topRadius
-    );
+    // Alternate twist direction for each section (like real Shukhov tower)
+    const sectionTwist = section % 2 === 0 ? twistRadians : -twistRadians;
 
-    const cwStrut = createStrut(cwStart, cwEnd, strutRadius, strutMaterial);
-    group.add(cwStrut);
+    // Generate straight-line diagonal struts for this section
+    // Two sets of struts going in opposite helical directions
+    for (let strutIndex = 0; strutIndex < strutCount; strutIndex++) {
+      const baseAngle = (strutIndex / strutCount) * Math.PI * 2;
 
-    // Counter-clockwise strut (bottom to top as single straight line)
-    const ccwStartAngle = baseAngle;
-    const ccwEndAngle = baseAngle - twistRadians;
+      // Clockwise strut (bottom to top as single straight line)
+      const cwStartAngle = baseAngle;
+      const cwEndAngle = baseAngle + sectionTwist;
 
-    const ccwStart = new THREE.Vector3(
-      Math.cos(ccwStartAngle) * baseRadius,
-      0,
-      Math.sin(ccwStartAngle) * baseRadius
-    );
-
-    const ccwEnd = new THREE.Vector3(
-      Math.cos(ccwEndAngle) * topRadius,
-      height,
-      Math.sin(ccwEndAngle) * topRadius
-    );
-
-    const ccwStrut = createStrut(ccwStart, ccwEnd, strutRadius, strutMaterial);
-    group.add(ccwStrut);
-  }
-
-  // Generate horizontal rings at the true hyperboloid radius
-  if (showRings) {
-    for (let i = 0; i <= ringCount; i++) {
-      const normalizedH = i / ringCount;
-      const ringHeight = normalizedH * height;
-      const radius = getStrutRadiusAtHeight(
-        normalizedH,
-        baseRadius,
-        topRadius,
-        twistRadians
+      const cwStart = new THREE.Vector3(
+        Math.cos(cwStartAngle) * sectionBottomRadius,
+        sectionBottomY,
+        Math.sin(cwStartAngle) * sectionBottomRadius
       );
-      const ring = createRing(radius, ringHeight, strutRadius * 0.8, ringMaterial);
-      group.add(ring);
+
+      const cwEnd = new THREE.Vector3(
+        Math.cos(cwEndAngle) * sectionTopRadius,
+        sectionTopY,
+        Math.sin(cwEndAngle) * sectionTopRadius
+      );
+
+      const cwStrut = createStrut(cwStart, cwEnd, strutRadius, strutMaterial);
+      group.add(cwStrut);
+
+      // Counter-clockwise strut (bottom to top as single straight line)
+      const ccwStartAngle = baseAngle;
+      const ccwEndAngle = baseAngle - sectionTwist;
+
+      const ccwStart = new THREE.Vector3(
+        Math.cos(ccwStartAngle) * sectionBottomRadius,
+        sectionBottomY,
+        Math.sin(ccwStartAngle) * sectionBottomRadius
+      );
+
+      const ccwEnd = new THREE.Vector3(
+        Math.cos(ccwEndAngle) * sectionTopRadius,
+        sectionTopY,
+        Math.sin(ccwEndAngle) * sectionTopRadius
+      );
+
+      const ccwStrut = createStrut(ccwStart, ccwEnd, strutRadius, strutMaterial);
+      group.add(ccwStrut);
+    }
+
+    // Generate horizontal rings for this section
+    if (showRings) {
+      for (let i = 0; i <= ringCount; i++) {
+        // Skip bottom ring for sections after the first (avoid duplicates)
+        if (section > 0 && i === 0) continue;
+
+        const normalizedH = i / ringCount;
+        const ringHeight = sectionBottomY + normalizedH * sectionHeight;
+        const radius = getStrutRadiusAtHeight(
+          normalizedH,
+          sectionBottomRadius,
+          sectionTopRadius,
+          Math.abs(sectionTwist)
+        );
+        const ring = createRing(radius, ringHeight, strutRadius * 0.8, ringMaterial);
+        group.add(ring);
+      }
     }
   }
 

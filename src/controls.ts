@@ -35,12 +35,16 @@ export function setupControls(
   // Structure folder
   const structureFolder = gui.addFolder('Structure');
   structureFolder
+    .add(params, 'sectionCount', 1, 10, 1)
+    .name('Section Count')
+    .onChange(onUpdate);
+  structureFolder
     .add(params, 'strutCount', 6, 48, 2)
     .name('Strut Count')
     .onChange(onUpdate);
   structureFolder
-    .add(params, 'ringCount', 2, 20, 1)
-    .name('Ring Count')
+    .add(params, 'ringCount', 1, 10, 1)
+    .name('Rings per Section')
     .onChange(onUpdate);
   structureFolder
     .add(params, 'strutRadius', 0.2, 2, 0.1)

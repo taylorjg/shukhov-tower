@@ -6,14 +6,15 @@ import './style.css';
 
 // Default tower parameters
 const params: TowerParams = {
-  height: 150,
-  baseRadius: 40,
+  height: 300,
+  baseRadius: 60,
   topRadius: 20,
+  sectionCount: 4,
   strutCount: 24,
-  ringCount: 4,
+  ringCount: 3,
   strutRadius: 0.5,
   showRings: true,
-  twistAngle: 45, // degrees
+  twistAngle: 40, // degrees
 };
 
 // Scene setup
@@ -27,7 +28,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(100, 80, 150);
+camera.position.set(100, 200, 300);
 camera.lookAt(0, params.height / 2, 0);
 
 // Renderer
