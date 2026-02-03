@@ -2,7 +2,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createTower, disposeTower, TowerParams } from './tower';
 import { setupControls } from './controls';
+import { version } from '../package.json';
 import './style.css';
+
+// Display version
+const versionEl = document.getElementById('version');
+if (versionEl) versionEl.textContent = `v${version}`;
 
 // Default tower parameters
 const params: TowerParams = {
