@@ -4,7 +4,14 @@ An interactive 3D visualization of the Shukhov Tower, built with Three.js and Ty
 
 The [Shukhov Tower](https://en.wikipedia.org/wiki/Shukhov_Tower) is a 160-meter hyperboloid structure in Moscow, designed by Vladimir Shukhov and built in 1920-1922. Its innovative design uses straight steel struts arranged in a lattice pattern to create a curved hyperboloid shape.
 
+## Screenshots
+
+![Shukhov tower with 1 section](/screenshots/shukhov-tower-1-section.png)
+
+![Shukhov tower with 6 sections](/screenshots/shukhov-tower-6-sections.png)
+
 ## Features
+
 
 - True hyperboloid geometry with straight-line struts
 - Multiple stacked sections with alternating twist directions
