@@ -2,7 +2,7 @@
   "name": "shukhov-tower",
   "description": "Interactive 3D visualization of the Shukhov Tower hyperboloid structure",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
