@@ -19,7 +19,7 @@ export function setupControls(
     .name('Base Radius')
     .onChange(onUpdate);
   dimensionsFolder
-    .add(params, 'topRadius', 5, 60, 1)
+    .add(params, 'topRadius', 1, 30, 1)
     .name('Top Radius')
     .onChange(onUpdate);
   dimensionsFolder.open();

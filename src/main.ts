@@ -13,13 +13,13 @@ if (versionEl) versionEl.textContent = `v${version}`;
 const params: TowerParams = {
   height: 300,
   baseRadius: 60,
-  topRadius: 20,
-  sectionCount: 4,
+  topRadius: 5,
+  sectionCount: 6,
   strutCount: 24,
-  ringCount: 3,
+  ringCount: 4,
   strutRadius: 0.5,
   showRings: true,
-  twistAngle: 40, // degrees
+  twistAngle: 50, // degrees
 };
 
 // Scene setup
