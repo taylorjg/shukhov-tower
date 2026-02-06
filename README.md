@@ -6,11 +6,15 @@ The [Shukhov Tower](https://en.wikipedia.org/wiki/Shukhov_Tower) is a 160-meter 
 
 ## Screenshots
 
-https://taylorjg.github.io/shukhov-tower?height=240&baseRadius=80&topRadius=30&sectionCount=1&ringCount=5&twistAngle=109
+### One Section
+
+[Show me](https://taylorjg.github.io/shukhov-tower?height=240&baseRadius=80&topRadius=30&sectionCount=1&ringCount=5&twistAngle=109)
 
 ![Shukhov tower with 1 section](/screenshots/shukhov-tower-1-section.png)
 
-https://taylorjg.github.io/shukhov-tower
+### Six Sections
+
+[Show me](https://taylorjg.github.io/shukhov-tower)
 
 ![Shukhov tower with 6 sections](/screenshots/shukhov-tower-6-sections.png)
 
