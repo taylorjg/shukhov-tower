@@ -22,6 +22,32 @@ const params: TowerParams = {
   twistAngle: 50, // degrees
 };
 
+// Parse query string parameters to override defaults
+function applyQueryParams(): void {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const paramMap: { key: keyof TowerParams; urlKey: string }[] = [
+    { key: 'height', urlKey: 'height' },
+    { key: 'baseRadius', urlKey: 'baseRadius' },
+    { key: 'topRadius', urlKey: 'topRadius' },
+    { key: 'sectionCount', urlKey: 'sectionCount' },
+    { key: 'ringCount', urlKey: 'ringCount' },
+    { key: 'twistAngle', urlKey: 'twistAngle' },
+  ];
+
+  for (const { key, urlKey } of paramMap) {
+    const value = urlParams.get(urlKey);
+    if (value !== null) {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        (params[key] as number) = numValue;
+      }
+    }
+  }
+}
+
+applyQueryParams();
+
 // Scene setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x1a1a2e);
