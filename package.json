@@ -9,7 +9,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "open": "open https://taylorjg.github.io/shukhov-tower"
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
