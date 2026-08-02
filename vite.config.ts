@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "/shukhov-tower",
@@ -6,6 +6,6 @@ export default defineConfig({
     open: true,
   },
   build: {
-    target: 'esnext',
+    target: "esnext",
   },
 });

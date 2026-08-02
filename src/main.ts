@@ -1,12 +1,12 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { createTower, disposeTower, TowerParams } from './tower';
-import { setupControls } from './controls';
-import { version } from '../package.json';
-import './style.css';
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { createTower, disposeTower, TowerParams } from "./tower";
+import { setupControls } from "./controls";
+import { version } from "../package.json";
+import "./style.css";
 
 // Display version
-const versionEl = document.getElementById('version');
+const versionEl = document.getElementById("version");
 if (versionEl) versionEl.textContent = `v${version}`;
 
 // Default tower parameters
@@ -27,12 +27,12 @@ function applyQueryParams(): void {
   const urlParams = new URLSearchParams(window.location.search);
 
   const paramMap: { key: keyof TowerParams; urlKey: string }[] = [
-    { key: 'height', urlKey: 'height' },
-    { key: 'baseRadius', urlKey: 'baseRadius' },
-    { key: 'topRadius', urlKey: 'topRadius' },
-    { key: 'sectionCount', urlKey: 'sectionCount' },
-    { key: 'ringCount', urlKey: 'ringCount' },
-    { key: 'twistAngle', urlKey: 'twistAngle' },
+    { key: "height", urlKey: "height" },
+    { key: "baseRadius", urlKey: "baseRadius" },
+    { key: "topRadius", urlKey: "topRadius" },
+    { key: "sectionCount", urlKey: "sectionCount" },
+    { key: "ringCount", urlKey: "ringCount" },
+    { key: "twistAngle", urlKey: "twistAngle" },
   ];
 
   for (const { key, urlKey } of paramMap) {
@@ -63,7 +63,7 @@ camera.position.set(100, 200, 300);
 camera.lookAt(0, params.height / 2, 0);
 
 // Renderer
-const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const renderer = new THREE.WebGLRenderer({
   canvas,
   antialias: true,
@@ -136,7 +136,7 @@ function onWindowResize(): void {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
-window.addEventListener('resize', onWindowResize);
+window.addEventListener("resize", onWindowResize);
 
 // Animation loop
 function animate(): void {

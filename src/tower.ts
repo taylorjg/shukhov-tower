@@ -37,7 +37,7 @@
  * @see https://en.wikipedia.org/wiki/Hyperboloid_of_one_sheet
  */
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export interface TowerParams {
   height: number;
@@ -91,9 +91,7 @@ function getStrutRadiusAtHeight(
 
   // r²(t) = (1-t)²·a² + t²·b² + 2(1-t)·t·a·b·cos(φ)
   const rSquared =
-    (1 - t) * (1 - t) * a * a +
-    t * t * b * b +
-    2 * (1 - t) * t * a * b * cosφ;
+    (1 - t) * (1 - t) * a * a + t * t * b * b + 2 * (1 - t) * t * a * b * cosφ;
 
   return Math.sqrt(Math.max(0, rSquared));
 }
@@ -294,7 +292,12 @@ export function createTower(params: TowerParams): THREE.Group {
         Math.sin(ccwEndAngle) * sectionTopRadius
       );
 
-      const ccwStrut = createStrut(ccwStart, ccwEnd, strutRadius, strutMaterial);
+      const ccwStrut = createStrut(
+        ccwStart,
+        ccwEnd,
+        strutRadius,
+        strutMaterial
+      );
       group.add(ccwStrut);
     }
 
