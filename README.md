@@ -40,7 +40,7 @@ The [Shukhov Tower](https://en.wikipedia.org/wiki/Shukhov_Tower) is a 160-meter 
 ### Installation
 
 ```bash
-npm install
+npm ci
 ```
 
 ### Development
