@@ -1,3 +1,5 @@
+[![CI/CD](https://github.com/taylorjg/shukhov-tower/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/taylorjg/shukhov-tower/actions/workflows/ci-cd.yml)
+
 # Shukhov Tower
 
 An interactive 3D visualization of the Shukhov Tower, built with Three.js and TypeScript.
